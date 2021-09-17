@@ -92,19 +92,25 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
         includePosition: true,
         includeTarget: true,
         frames: 90,
+
         positionKeys: [] as Vector3[],
         targetKeys: [] as Vector3[],
+        lastPosition: new Vector3(),
+        lastTarget: new Vector3(),
+
         add: function () {
             options.positionKeys.push(
                 options.includePosition
                     ? appConfig.appCamera!.position.clone()
-                    : options.positionKeys[options.positionKeys.length - 1].clone()
+                    : options.lastPosition.clone()
             );
             options.targetKeys.push(
                 options.includeTarget
                     ? appConfig.appCamera!.target.clone()
-                    : options.targetKeys[options.targetKeys.length - 1].clone()
+                    : options.lastTarget.clone()
             );
+            options.lastPosition = options.positionKeys[options.positionKeys.length - 1];
+            options.lastTarget = options.targetKeys[options.targetKeys.length - 1];
         },
         next: function () {
             sos_gallery_slides.push({
@@ -114,6 +120,8 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
                 frames: options.frames,
             });
             options.name = `Slides_${sos_gallery_slides.length + 1}`;
+            options.positionKeys = [];
+            options.targetKeys = [];
         },
         copy: function () {
             const json = `
