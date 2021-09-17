@@ -37,86 +37,162 @@ interface GallerySlideType {
     name: string,
     positionKeys: Vector3[],
     targetKeys: Vector3[],
+    includeTarget: boolean,
+    invertTargetInReverse: boolean,
     frames: number,
 }
 
-const gallerySlides: GallerySlideType[] =
-    [
-        {
-            name: "Slide_0",
-            positionKeys: [],
-            targetKeys: [],
-            frames: 0,
-        },
-        {
-            name: "Slide_1",
-            positionKeys: [
+const gallerySlides: GallerySlideType[] = [
 
-                new Vector3(31.787974891983552, 13.560002520686336, 31.818485616555773),
+    {
+        name: "Slide_1",
+        positionKeys: [
 
-                new Vector3(30.766321531887264, 13.560001479502514, 18.675679148816908),
+        ],
+        targetKeys: [
 
-                new Vector3(25.83719929448477, 13.560000154758793, 1.95351161077264),
+        ],
+        includeTarget: true,
+        invertTargetInReverse: false,
+        frames: 90,
+    },
 
-                new Vector3(20.12521722025641, 13.559999401441203, -7.555575133097766),
+    {
+        name: "Slides_2",
+        positionKeys: [
 
-                new Vector3(2.969841846687551, 13.559997877429744, -26.79308844975219),
+            new Vector3(31.20832966308216, 22.196359666772523, 34.289489546701915),
 
-                new Vector3(-16.959935424943854, 13.559997573101791, -30.634603555380735),
+            new Vector3(30.963221314778487, 13.560002446369623, 30.8803897850875),
 
-            ],
-            targetKeys: [
+            new Vector3(26.667668900705614, 13.560000994066005, 12.548040626971702),
 
-                new Vector3(31.478452731951048, 13.46494612019149, 30.935501829572257),
+            new Vector3(31.634616720956448, 13.559998987824073, -12.776641556938053),
 
-                new Vector3(30.697225710628846, 13.466504651929037, 17.742413783486903),
+            new Vector3(29.872233394709543, 13.559998391971398, -20.298057305372588),
 
-                new Vector3(25.571464241097978, 13.466815262790925, 1.056181350534066),
+        ],
+        targetKeys: [
 
-                new Vector3(19.639741236185948, 13.467126466100282, -8.355692477040382),
+            new Vector3(31.000195489641914, 21.967954436282007, 33.40122641080184),
 
-                new Vector3(2.281935721884115, 13.462758516293038, -27.42698885631495),
+            new Vector3(30.75508714133824, 13.331597215879107, 29.992126649187426),
 
-                new Vector3(-17.65493672714696, 13.492503556628861, -31.264617761562604),
+            new Vector3(26.459534727265368, 13.33159576357549, 11.659777491071626),
 
-            ],
-            frames: 90,
-        },
-    ];
+            new Vector3(31.4264825475162, 13.331593757333557, -13.664904692838128),
+
+            new Vector3(29.557551693910813, 13.562516867433718, -21.1843243112078),
+
+        ],
+        includeTarget: true,
+        invertTargetInReverse: true,
+        frames: 90,
+    },
+
+    {
+        name: "Slides_3",
+        positionKeys: [
+
+            new Vector3(1.463333034640959, 13.559998645098343, -17.102849724129896),
+
+        ],
+        targetKeys: [
+
+            new Vector3(1.3605984554111639, 13.562517120560663, -18.037696982747608),
+
+        ],
+        includeTarget: false,
+        invertTargetInReverse: false,
+        frames: 90,
+    },
+
+    {
+        name: "Slides_4",
+        positionKeys: [
+
+            new Vector3(-21.184894733095284, 13.559998467869805, -19.33999584044646),
+
+        ],
+        targetKeys: [
+
+            new Vector3(-21.42708121550712, 13.564397887640109, -20.248745810409698),
+
+        ],
+        includeTarget: false,
+        invertTargetInReverse: false,
+        frames: 90,
+    },
+
+    {
+        name: "Slides_5",
+        positionKeys: [
+
+            new Vector3(-21.184894733095284, 13.559998467869805, -19.33999584044646),
+
+            new Vector3(-21.184894733095284, 13.559998467869805, -19.33999584044646),
+
+            new Vector3(-21.184894733095284, 13.559998467869805, -19.33999584044646),
+
+            new Vector3(-21.184894733095284, 13.559998467869805, -19.33999584044646),
+
+            new Vector3(-29.994065300537404, 13.559999588798448, -5.1905748860356375),
+
+            new Vector3(-31.81347020147742, 13.560001096665053, 13.843142801983197),
+
+            new Vector3(-9.329578844142803, 13.560002522231606, 31.787991476059002),
+
+            new Vector3(19.411541972729275, 13.560002099073978, 26.496495859747835),
+
+        ],
+        targetKeys: [
+
+            new Vector3(-21.42708121550712, 13.564397887640109, -20.248745810409698),
+
+            new Vector3(-22.06876777306372, 13.400481811034705, -19.61896366378754),
+
+            new Vector3(-21.71082172310562, 13.4659766230342, -18.566005643169618),
+
+            new Vector3(-21.119369286001277, 13.469720431986872, -18.406156204562212),
+
+            new Vector3(-29.72404864259713, 13.46628966556215, -4.29457847689093),
+
+            new Vector3(-30.999420063504317, 13.472531882726328, 14.305929656982743),
+
+            new Vector3(-8.40899610396019, 13.473469759787793, 31.616120509643945),
+
+            new Vector3(19.639897508780113, 13.531749548836723, 25.58459907978372),
+
+        ],
+        includeTarget: true,
+        invertTargetInReverse: true,
+        frames: 90,
+    },
+];
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     const sos_gallery_slides: GallerySlideType[] = [];
 
     const options = {
         name: "Slide_1",
-        includePosition: true,
         includeTarget: true,
+        invertTargetInReverse: false,
         frames: 90,
 
         positionKeys: [] as Vector3[],
         targetKeys: [] as Vector3[],
-        lastPosition: new Vector3(),
-        lastTarget: new Vector3(),
 
         add: function () {
-            options.positionKeys.push(
-                options.includePosition
-                    ? appConfig.appCamera!.position.clone()
-                    : options.lastPosition.clone()
-            );
-            options.targetKeys.push(
-                options.includeTarget
-                    ? appConfig.appCamera!.target.clone()
-                    : options.lastTarget.clone()
-            );
-            options.lastPosition = options.positionKeys[options.positionKeys.length - 1];
-            options.lastTarget = options.targetKeys[options.targetKeys.length - 1];
+            options.positionKeys.push(appConfig.appCamera!.position.clone());
+            options.targetKeys.push(appConfig.appCamera!.target.clone());
         },
         next: function () {
             sos_gallery_slides.push({
                 name: options.name,
                 positionKeys: options.positionKeys,
                 targetKeys: options.targetKeys,
+                includeTarget: options.includeTarget,
+                invertTargetInReverse: options.invertTargetInReverse,
                 frames: options.frames,
             });
             options.name = `Slides_${sos_gallery_slides.length + 1}`;
@@ -139,12 +215,13 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
                                     new Vector3(${tar.x}, ${tar.y}, ${tar.z}),
                                 `).join("")}
                             ],
+                            includeTarget: ${slide.includeTarget},
+                            invertTargetInReverse: ${slide.invertTargetInReverse},
                             frames: ${slide.frames},
                         },
                     `).join("")}
                 ]
-            `;
-            json.replaceAll(/(^[ \t]*\n)/gm, "");
+            `.replaceAll("(?m)^\\s*$[\n\r]{1,}", "");
             navigator.clipboard.writeText(json);
         }
     }
@@ -153,8 +230,9 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     gui.domElement.id = 'dat-gui';
     const slidesFolder = gui.addFolder("Slides");
     slidesFolder.add(options, 'name').name("Slide Name").listen();
-    slidesFolder.add(options, 'includePosition').name("Include Postion");
     slidesFolder.add(options, 'includeTarget').name("Include Target");
+    slidesFolder.add(options, 'invertTargetInReverse').name("Invert Target In Reverse");
+    slidesFolder.add(options, 'frames').name("Frames").min(15).max(150);
     slidesFolder.add(options, 'add').name("Add Keys");
     slidesFolder.add(options, 'next').name("Next Slide");
     slidesFolder.add(options, 'copy').name("Copy to Clipboard");
@@ -198,7 +276,9 @@ const onSceneReady = (scene: Scene) => {
 
 const onNext = () => {
 
-    const nextSlideIndex = (appConfig.currentSlideIndex + 1) % (gallerySlides.length + 1);
+    var nextSlideIndex = (appConfig.currentSlideIndex + 1) % (gallerySlides.length + 1);
+
+    if (nextSlideIndex >= gallerySlides.length) nextSlideIndex = 0;
 
     console.log(appConfig.currentSlideIndex);
     moveToSlide(gallerySlides[appConfig.currentSlideIndex], false);
@@ -209,7 +289,9 @@ const onNext = () => {
 
 const onPrev = () => {
 
-    let previousSlideIndex = (appConfig.currentSlideIndex + gallerySlides.length) % (gallerySlides.length + 1);
+    var previousSlideIndex = (appConfig.currentSlideIndex - 1) % (gallerySlides.length + 1);
+
+    if (previousSlideIndex < 0) previousSlideIndex = gallerySlides.length - 1;
 
     console.log(appConfig.currentSlideIndex);
     moveToSlide(gallerySlides[previousSlideIndex], true);
@@ -252,10 +334,11 @@ const moveToSlide = (slideToDisplay: GallerySlideType, reverse = false, isInitia
         ];
         if (reverse) {
             for (var tarIdx = slideToDisplay.targetKeys.length - 1; tarIdx >= 0; tarIdx--) {
+                const pos = slideToDisplay.positionKeys[tarIdx];
                 const tar = slideToDisplay.targetKeys[tarIdx];
                 targetKeys.push({
                     frame: (slideToDisplay.targetKeys.length - tarIdx) / slideToDisplay.targetKeys.length * slideToDisplay.frames,
-                    value: tar.clone().scale(-1)
+                    value: slideToDisplay.invertTargetInReverse ? pos.add(tar.subtract(pos).scale(-1)) : tar
                 });
             }
         } else {
@@ -270,7 +353,7 @@ const moveToSlide = (slideToDisplay: GallerySlideType, reverse = false, isInitia
 
         appConfig.appCamera.animations = [];
         appConfig.appCamera.animations.push(appConfig.animCameraPosition);
-        appConfig.appCamera.animations.push(appConfig.animCameraTarget);
+        if (slideToDisplay.includeTarget) appConfig.appCamera.animations.push(appConfig.animCameraTarget);
 
         appConfig.appCamera.detachControl(appConfig.appScene.getEngine()._workingCanvas);
 
@@ -279,6 +362,9 @@ const moveToSlide = (slideToDisplay: GallerySlideType, reverse = false, isInitia
                 if (isInitializer) {
                     (window.document.getElementsByClassName("loading-screen")[0] as any).style.opacity = 0;
                     setTimeout(() => { window.document.getElementsByClassName("loading-screen")[0].remove(); appConfig.currentSlideIndex++ }, 1000);
+                }
+                if (!slideToDisplay.includeTarget) {
+                    appConfig.appCamera.target = reverse ? slideToDisplay.targetKeys[0] : slideToDisplay.targetKeys[slideToDisplay.targetKeys.length - 1];
                 }
                 appConfig.appCamera.attachControl(appConfig.appScene.getEngine()._workingCanvas, true);
                 appConfig.appCamera.lockedTarget = null;
