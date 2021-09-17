@@ -1,7 +1,7 @@
 import React, { } from 'react';
 
 import { LoaderStatus, useSceneLoader } from 'react-babylonjs-loaders';
-import { PBRMaterial, Vector3 } from '@babylonjs/core';
+import { ActionManager, ExecuteCodeAction, PBRMaterial, Vector3 } from '@babylonjs/core';
 
 type BuildingLoaderModelProps = {
     position: Vector3
@@ -33,6 +33,34 @@ const BuildingLoaderModels: React.FC<BuildingLoaderModelProps> = ({ position }) 
                 loadedModel.rootMesh!.getScene().getNodeByID("walls_interior")?.getChildMeshes().forEach((thisMesh) => { thisMesh.checkCollisions = true });
                 loadedModel.rootMesh!.getScene().getNodeByID("stairs")?.getChildMeshes().forEach((thisMesh) => { thisMesh.checkCollisions = true });
                 //loadedModel.rootMesh!.getScene().getNodeByID("glass")?.getChildMeshes().forEach((thisMesh) => { thisMesh.checkCollisions = true });
+
+                const scene = loadedModel.rootMesh!.getScene();
+                const actionManager = new ActionManager(scene);
+                actionManager.registerAction(
+                    new ExecuteCodeAction(
+                        {
+                            trigger: ActionManager.OnPickTrigger
+                        },
+                        (evt) => {
+                            alert(`${evt.meshUnderPointer?.name} Mesh Picked!!`);
+                        },
+                    )
+                );
+
+                [
+                    "001_Spreading_Joy_Peace_Through_Meditation",
+                    "002_World_Tours",
+                    "003_Worldwide_Centers",
+                    "004_Humanitarian_Work",
+                    "005_Books_Media",
+                    "006_Selfless_Service_Charitable",
+                    "007_Meditation_for_Physical_Mental_Spiritual_Health",
+                ].forEach(name => {
+                    const node = scene.getNodeByName(name)!;
+                    node.getChildMeshes().forEach(mesh => {
+                        mesh.actionManager = actionManager;
+                    });
+                });
 
                 ["001_Spreading_Joy_Peace_Through_Meditation",
                     "002_World_Tours",
