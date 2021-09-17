@@ -221,7 +221,8 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
                         },
                     `).join("")}
                 ]
-            `.replaceAll("(?m)^\\s*$[\n\r]{1,}", "");
+            `.split("\n").filter(line => !line.match("^[ \t]*$")).join("\n");
+            console.log(JSON.stringify(json));
             navigator.clipboard.writeText(json);
         }
     }
