@@ -22,122 +22,98 @@ const framecount = 200;
 
 interface AppConfigType {
     appScene?: Scene;
-    currentSlideIndex?: number;
+    currentSlideIndex: number;
     appCamera?: UniversalCamera;
     animCameraPosition?: any;
     animCameraTarget?: any;
 
 }
 
-const appConfig: AppConfigType = {};
+const appConfig: AppConfigType = {
+    currentSlideIndex: 0,
+};
 
 interface GallerySlideType {
-    name?: string,
-    slideCameraTarget: Vector3,
-    slideCameraPosition: Vector3,
-    animationSpeed?: number,
-    animationFrameCount?: number,
-    positionOnly?: boolean,
-    autoNext?: boolean,
-    isInitializer?: boolean
+    name: string,
+    positionKeys: Vector3[],
+    targetKeys: Vector3[],
+    frames: number,
 }
 
-const gallerySlides: GallerySlideType[] = [
+const gallerySlides: GallerySlideType[] =
+    [
+        {
+            name: "Slide_0",
+            positionKeys: [],
+            targetKeys: [],
+            frames: 0,
+        },
+        {
+            name: "Slide_1",
+            positionKeys: [
 
-    {
-        name: "Slide_0",
-        slideCameraPosition: new Vector3(31.20832966308216, 22.196359666772523, 34.289489546701915),
-        slideCameraTarget: new Vector3(30.667263412309627, 21.972823394806266, 33.553433198881265),
-        isInitializer: true,
-    },
-    {
-        name: "Landing_Position",
-        slideCameraPosition: new Vector3(14.5384268322535, 13.560000783879708, 9.894870518821271),
-        slideCameraTarget: new Vector3(14.222325359736375, 13.495514353290124, 10.778285155395782),
-    },
-    {
-        name: "Slides_2",
-        slideCameraPosition: new Vector3(-16.266625726645987, 13.56000164319088, 20.741908444126178),
-        slideCameraTarget: new Vector3(-17.206784852996773, 13.542896569858412, 20.72434852514045),
-    },
+                new Vector3(31.787974891983552, 13.560002520686336, 31.818485616555773),
 
-    {
-        name: "Slides_3",
-        slideCameraPosition: new Vector3(-16.20365907606718, 13.559999160935625, -10.591463891483988),
-        slideCameraTarget: new Vector3(-17.143818202417965, 13.542894087603157, -10.609023810469719),
-        positionOnly: true,
-    },
+                new Vector3(30.766321531887264, 13.560001479502514, 18.675679148816908),
 
-    {
-        name: "Slides_4",
-        slideCameraPosition: new Vector3(-22.604083701249927, 13.55999875785718, -15.679501083521078),
-        slideCameraTarget: new Vector3(-22.569189327617295, 13.547254485342998, -16.61924578124054),
-    },
+                new Vector3(25.83719929448477, 13.560000154758793, 1.95351161077264),
 
-    {
-        name: "Slides_5",
-        slideCameraPosition: new Vector3(-2.8820644439476997, 13.559998813941293, -14.97155440821931),
-        slideCameraTarget: new Vector3(-2.8471700703150695, 13.547254541427112, -15.91129910593877),
-        positionOnly: true,
-    },
+                new Vector3(20.12521722025641, 13.559999401441203, -7.555575133097766),
 
-    {
-        name: "Slides_6",
-        slideCameraPosition: new Vector3(18.772028054177543, 13.559998877636025, -14.167539276609663),
-        slideCameraTarget: new Vector3(18.806922427810175, 13.547254605121843, -15.107283974329123),
-        positionOnly: true,
-    },
+                new Vector3(2.969841846687551, 13.559997877429744, -26.79308844975219),
 
-    {
-        name: "Slides_7",
-        slideCameraPosition: new Vector3(16.837856957341327, 13.559998452754428, -19.53079643463817),
-        slideCameraTarget: new Vector3(17.7780599201847, 13.549605198570926, -19.510536177899123),
-    },
+                new Vector3(-16.959935424943854, 13.559997573101791, -30.634603555380735),
 
-    {
-        name: "Slides_8",
-        slideCameraPosition: new Vector3(16.07274462336508, 13.560001358272869, 17.145403954314457),
-        slideCameraTarget: new Vector3(17.01294758620845, 13.549608104089367, 17.165664211053503),
-        positionOnly: true,
-    },
+            ],
+            targetKeys: [
 
-];
+                new Vector3(31.478452731951048, 13.46494612019149, 30.935501829572257),
+
+                new Vector3(30.697225710628846, 13.466504651929037, 17.742413783486903),
+
+                new Vector3(25.571464241097978, 13.466815262790925, 1.056181350534066),
+
+                new Vector3(19.639741236185948, 13.467126466100282, -8.355692477040382),
+
+                new Vector3(2.281935721884115, 13.462758516293038, -27.42698885631495),
+
+                new Vector3(-17.65493672714696, 13.492503556628861, -31.264617761562604),
+
+            ],
+            frames: 90,
+        },
+    ];
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    const sos_gallery_slides: {
-        name: string,
-        position: Vector3,
-        target: Vector3,
-        speed: number,
-        framesCount: number,
-        positionOnly: boolean,
-        autoNext: boolean,
-        isInitializer: boolean
-    }[] = [];
+    const sos_gallery_slides: GallerySlideType[] = [];
 
     const options = {
         name: "Slide_1",
-        speed: speed,
-        framesCount: framecount,
-        positionOnly: false,
-        autoNext: false,
-        isInitializer: true,
+        includePosition: true,
+        includeTarget: true,
+        frames: 90,
+        positionKeys: [] as Vector3[],
+        targetKeys: [] as Vector3[],
         add: function () {
+            options.positionKeys.push(
+                options.includePosition
+                    ? appConfig.appCamera!.position.clone()
+                    : options.positionKeys[options.positionKeys.length - 1].clone()
+            );
+            options.targetKeys.push(
+                options.includeTarget
+                    ? appConfig.appCamera!.target.clone()
+                    : options.targetKeys[options.targetKeys.length - 1].clone()
+            );
+        },
+        next: function () {
             sos_gallery_slides.push({
                 name: options.name,
-                position: appConfig.appCamera!.position.clone(),
-                target: appConfig.appCamera!.target.clone(),
-                speed: options.speed,
-                framesCount: options.framesCount,
-                positionOnly: options.positionOnly,
-                autoNext: options.autoNext,
-                isInitializer: options.isInitializer,
+                positionKeys: options.positionKeys,
+                targetKeys: options.targetKeys,
+                frames: options.frames,
             });
-
             options.name = `Slides_${sos_gallery_slides.length + 1}`;
-            if (sos_gallery_slides.length >= 1) {
-                options.isInitializer = false;
-            }
         },
         copy: function () {
             const json = `
@@ -145,17 +121,22 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
                     ${sos_gallery_slides.map(slide => `
                         {
                             name: "${slide.name}",
-                            slideCameraPosition: ${`new Vector3(${slide.position.x}, ${slide.position.y}, ${slide.position.z})`},
-                            slideCameraTarget: ${`new Vector3(${slide.target.x}, ${slide.target.y}, ${slide.target.z})`},
-                            animationSpeed: ${slide.speed},
-                            animationFrameCount: ${slide.framesCount},
-                            positionOnly: ${slide.positionOnly},
-                            autoNext: ${slide.autoNext},
-                            isInitializer: ${slide.isInitializer},
+                            positionKeys: [
+                                ${slide.positionKeys.map(pos => `
+                                    new Vector3(${pos.x}, ${pos.y}, ${pos.z}),
+                                `).join("")}
+                            ],
+                            targetKeys: [
+                                ${slide.targetKeys.map(tar => `
+                                    new Vector3(${tar.x}, ${tar.y}, ${tar.z}),
+                                `).join("")}
+                            ],
+                            frames: ${slide.frames},
                         },
                     `).join("")}
                 ]
             `;
+            json.replaceAll(/(^[ \t]*\n)/gm, "");
             navigator.clipboard.writeText(json);
         }
     }
@@ -164,12 +145,10 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     gui.domElement.id = 'dat-gui';
     const slidesFolder = gui.addFolder("Slides");
     slidesFolder.add(options, 'name').name("Slide Name").listen();
-    slidesFolder.add(options, 'speed').name("Speed");
-    slidesFolder.add(options, 'framesCount').name("Frames Count");
-    slidesFolder.add(options, 'positionOnly').name("Position Only?");
-    slidesFolder.add(options, 'autoNext').name("Auto Next?");
-    slidesFolder.add(options, 'isInitializer').name("Initialier?").listen();
-    slidesFolder.add(options, 'add').name("Add Slide");
+    slidesFolder.add(options, 'includePosition').name("Include Postion");
+    slidesFolder.add(options, 'includeTarget').name("Include Target");
+    slidesFolder.add(options, 'add').name("Add Keys");
+    slidesFolder.add(options, 'next').name("Next Slide");
     slidesFolder.add(options, 'copy').name("Copy to Clipboard");
     gui.close();
 }
@@ -204,91 +183,99 @@ const onSceneReady = (scene: Scene) => {
 
     appConfig.animCameraTarget = new Animation("animCameraTarget", "target", 30, Animation.ANIMATIONTYPE_VECTOR3, Animation.ANIMATIONLOOPMODE_CONSTANT);
     appConfig.animCameraPosition = new Animation("animCameraPosition", "position", 30, Animation.ANIMATIONTYPE_VECTOR3, Animation.ANIMATIONLOOPMODE_CONSTANT);
-    appConfig.animCameraTarget.setEasingFunction(easingFunction);
-    appConfig.animCameraPosition.setEasingFunction(easingFunction);
-
+    // appConfig.animCameraTarget.setEasingFunction(easingFunction);
+    // appConfig.animCameraPosition.setEasingFunction(easingFunction);
 
 }
 
 const onNext = () => {
 
-    const slideToDisplayIndex = ((appConfig.currentSlideIndex ?? 0) + 1) % gallerySlides.length;
+    const nextSlideIndex = (appConfig.currentSlideIndex + 1) % (gallerySlides.length + 1);
 
-    const slideToDisplay = gallerySlides[slideToDisplayIndex];
+    console.log(appConfig.currentSlideIndex);
+    moveToSlide(gallerySlides[appConfig.currentSlideIndex], false);
 
-    moveToSlide(slideToDisplay, slideToDisplay.positionOnly ?? false);
-
-    appConfig.currentSlideIndex = slideToDisplayIndex;
+    appConfig.currentSlideIndex = nextSlideIndex;
 
 }
 
 const onPrev = () => {
 
-    let previousSlideIndex = ((appConfig.currentSlideIndex ?? 0) - 1) % gallerySlides.length;
+    let previousSlideIndex = (appConfig.currentSlideIndex + gallerySlides.length) % (gallerySlides.length + 1);
 
-    if (previousSlideIndex < 0) previousSlideIndex = 0;
-
-    const slideToDisplay = gallerySlides[previousSlideIndex];
-
-    moveToSlide(slideToDisplay, gallerySlides[appConfig.currentSlideIndex ?? 0].positionOnly ?? false);
+    console.log(appConfig.currentSlideIndex);
+    moveToSlide(gallerySlides[previousSlideIndex], true);
 
     appConfig.currentSlideIndex = previousSlideIndex;
 
 }
 
-const moveToSlide = (slideToDisplay: GallerySlideType, positionOnly: boolean) => {
-    if (appConfig.appScene && appConfig.appScene.activeCamera && appConfig.appScene.activeCameras) {
-        if (appConfig.appCamera) {
-
-
-            var positionKeys = [{
+const moveToSlide = (slideToDisplay: GallerySlideType, reverse = false, isInitializer = false) => {
+    if (appConfig.appScene && appConfig.appCamera && appConfig.appScene.activeCamera && appConfig.appScene.activeCameras) {
+        var positionKeys = [
+            {
                 frame: 0,
                 value: appConfig.appCamera.position
-            },
-            //At the animation key 100, the value of scaling is "1"
+            }
+        ];
+        if (reverse) {
+            for (var posIdx = slideToDisplay.positionKeys.length - 1; posIdx >= 0; posIdx--) {
+                const pos = slideToDisplay.positionKeys[posIdx];
+                positionKeys.push({
+                    frame: (slideToDisplay.positionKeys.length - posIdx) / slideToDisplay.positionKeys.length * slideToDisplay.frames,
+                    value: pos
+                });
+            }
+        } else {
+            slideToDisplay.positionKeys.forEach((pos, idx) => {
+                positionKeys.push({
+                    frame: (idx + 1) / slideToDisplay.positionKeys.length * slideToDisplay.frames,
+                    value: pos
+                });
+            });
+        }
+        appConfig.animCameraPosition.setKeys(positionKeys);
+
+        var targetKeys = [
             {
-                frame: 100,
-                value: slideToDisplay.slideCameraPosition
-            }];
-
-            appConfig.animCameraPosition.setKeys(positionKeys);
-
-            var targetKeys = [{
                 frame: 0,
                 value: appConfig.appCamera.getTarget()
-            }, {
-                frame: 100,
-                value: slideToDisplay.slideCameraTarget
-            }];
-
-            appConfig.animCameraTarget.setKeys(targetKeys);
-
-            appConfig.appCamera.animations = [];
-
-
-            appConfig.appCamera.animations.push(appConfig.animCameraPosition);
-            if (!positionOnly) appConfig.appCamera.animations.push(appConfig.animCameraTarget);
-            appConfig.appCamera.detachControl(appConfig.appScene.getEngine()._workingCanvas);
-
-            appConfig.appScene.beginDirectAnimation(appConfig.appCamera, appConfig.appCamera.animations, 0, 360, false, 1, () => {
-                if (appConfig.appCamera && appConfig.appScene) {
-                    if (slideToDisplay.isInitializer) {
-                        (window.document.getElementsByClassName("loading-screen")[0] as any).style.opacity = 0;
-                        setTimeout(() => { window.document.getElementsByClassName("loading-screen")[0].remove(); onNext(); }, 1000);
-                        slideToDisplay.isInitializer = false;
-                    }
-                    if (positionOnly) {
-                        appConfig.appCamera.target = slideToDisplay.slideCameraTarget;
-                    }
-                    appConfig.appCamera.attachControl(appConfig.appScene.getEngine()._workingCanvas, true);
-                    appConfig.appCamera.lockedTarget = null;
-                    if (slideToDisplay.autoNext) onNext();
-                }
+            }
+        ];
+        if (reverse) {
+            for (var tarIdx = slideToDisplay.targetKeys.length - 1; tarIdx >= 0; tarIdx--) {
+                const tar = slideToDisplay.targetKeys[tarIdx];
+                targetKeys.push({
+                    frame: (slideToDisplay.targetKeys.length - tarIdx) / slideToDisplay.targetKeys.length * slideToDisplay.frames,
+                    value: tar.clone().scale(-1)
+                });
+            }
+        } else {
+            slideToDisplay.targetKeys.forEach((tar, idx) => {
+                targetKeys.push({
+                    frame: (idx + 1) / slideToDisplay.targetKeys.length * slideToDisplay.frames,
+                    value: tar
+                });
             });
-
         }
+        appConfig.animCameraTarget.setKeys(targetKeys);
 
+        appConfig.appCamera.animations = [];
+        appConfig.appCamera.animations.push(appConfig.animCameraPosition);
+        appConfig.appCamera.animations.push(appConfig.animCameraTarget);
 
+        appConfig.appCamera.detachControl(appConfig.appScene.getEngine()._workingCanvas);
+
+        appConfig.appScene.beginDirectAnimation(appConfig.appCamera, appConfig.appCamera.animations, 0, slideToDisplay.frames, false, 1, () => {
+            if (appConfig.appCamera && appConfig.appScene) {
+                if (isInitializer) {
+                    (window.document.getElementsByClassName("loading-screen")[0] as any).style.opacity = 0;
+                    setTimeout(() => { window.document.getElementsByClassName("loading-screen")[0].remove(); appConfig.currentSlideIndex++ }, 1000);
+                }
+                appConfig.appCamera.attachControl(appConfig.appScene.getEngine()._workingCanvas, true);
+                appConfig.appCamera.lockedTarget = null;
+            }
+        });
     }
 }
 
@@ -327,7 +314,7 @@ export default () => {
                 //animateCameraToPosition(appConfig.appCamera, speed, framecount, new Vector3(25.30, 15.57, 31.84));
                 appConfig.currentSlideIndex = 0;
                 var slideToDisplay = gallerySlides[appConfig.currentSlideIndex];
-                moveToSlide(slideToDisplay, slideToDisplay.positionOnly ?? false);
+                moveToSlide(slideToDisplay, false, true);
             }
         }
     });
