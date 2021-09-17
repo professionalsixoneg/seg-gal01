@@ -1,0 +1,51 @@
+#my-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+html,
+body,
+#root,
+#canvas-wrapper {
+  height: 100%;
+}
+
+.slide-show-controls-prev {
+  position: absolute;
+  left: 3em;
+  bottom: 3em;
+}
+
+.slide-show-controls-next {
+  position: absolute;
+  right: 3em;
+  bottom: 3em;
+}
+
+.slide-show-controls button {
+  background-color: #666;
+  border: 1px solid #333;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 50% 0%;
+  font-size: 1.25em;
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+.narration-overlay {
+  position: absolute;
+  padding: 0.5em 0;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+  font-size: 1.25em;
+  color: black;
+  background-color: #acacaccc;
+}
+
+#dat-gui {
+  position: absolute;
+  top: 2px;
+  right: 40px;
+}
