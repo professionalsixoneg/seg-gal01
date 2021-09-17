@@ -103,11 +103,52 @@ const gallerySlides: GallerySlideType[] = [
 
 ];
 
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    const sos_gallery_slides: { name: string, position: Vector3, target: Vector3 }[] = [];
+
+    const options = {
+        name: "Slide_1",
+        add: function () {
+            sos_gallery_slides.push({
+                name: options.name,
+                position: appConfig.appCamera!.position.clone(),
+                target: appConfig.appCamera!.target.clone()
+            });
+            options.name = `Slides_${sos_gallery_slides.length + 1}`;
+        },
+        copy: function () {
+            const json = `
+                [
+                    ${sos_gallery_slides.map(slide => `
+                        {
+                            name: "${slide.name}",
+                            slideCameraPosition: ${`new Vector3(${slide.position.x}, ${slide.position.y}, ${slide.position.z})`},
+                            slideCameraTarget: ${`new Vector3(${slide.target.x}, ${slide.target.y}, ${slide.target.z})`},
+                        },
+                    `).join("")}
+                ]
+            `;
+            navigator.clipboard.writeText(json);
+        }
+    }
+
+    const gui = new dat.GUI({ name: "sos-gallery-dev" });
+    gui.domElement.id = 'dat-gui';
+    const slidesFolder = gui.addFolder("Slides");
+    slidesFolder.add(options, 'name').name("Slide Name").listen();
+    slidesFolder.add(options, 'add').name("Add Slide");
+    slidesFolder.add(options, 'copy').name("Copy to Clipboard");
+    gui.close();
+}
 
 /**
  * Called once when the scene is ready.
  */
 const onSceneReady = (scene: Scene) => {
+
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+        scene.debugLayer.show();
+    }
 
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
     var light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
