@@ -34,6 +34,17 @@ const BuildingLoaderModels: React.FC<BuildingLoaderModelProps> = ({ position }) 
                 loadedModel.rootMesh!.getScene().getNodeByID("stairs")?.getChildMeshes().forEach((thisMesh) => { thisMesh.checkCollisions = true });
                 //loadedModel.rootMesh!.getScene().getNodeByID("glass")?.getChildMeshes().forEach((thisMesh) => { thisMesh.checkCollisions = true });
 
+                const nodeNameToUrls: { [key: string]: string } = {
+                    "001_Spreading_Joy_Peace_Through_Meditation": "",
+                    "002_World_Tours": "",
+                    "003_Worldwide_Centers": "",
+                    "004_Humanitarian_Work": "",
+                    "005_Books_Media": "https://google.com",
+                    "006_Selfless_Service_Charitable": "",
+                    "007_Meditation_for_Physical_Mental_Spiritual_Health": "",
+                }
+                const nodeNames = Object.keys(nodeNameToUrls);
+
                 const scene = loadedModel.rootMesh!.getScene();
                 const actionManager = new ActionManager(scene);
                 actionManager.registerAction(
@@ -42,20 +53,12 @@ const BuildingLoaderModels: React.FC<BuildingLoaderModelProps> = ({ position }) 
                             trigger: ActionManager.OnPickTrigger
                         },
                         (evt) => {
-                            alert(`${evt.meshUnderPointer?.name} Mesh Picked!!`);
+                            window.location.href = nodeNameToUrls[evt.meshUnderPointer?.parent?.name!]!;
                         },
                     )
                 );
 
-                [
-                    "001_Spreading_Joy_Peace_Through_Meditation",
-                    "002_World_Tours",
-                    "003_Worldwide_Centers",
-                    "004_Humanitarian_Work",
-                    "005_Books_Media",
-                    "006_Selfless_Service_Charitable",
-                    "007_Meditation_for_Physical_Mental_Spiritual_Health",
-                ].forEach(name => {
+                nodeNames.forEach(name => {
                     const node = scene.getNodeByName(name)!;
                     node.getChildMeshes().forEach(mesh => {
                         mesh.actionManager = actionManager;
