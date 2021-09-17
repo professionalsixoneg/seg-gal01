@@ -104,17 +104,40 @@ const gallerySlides: GallerySlideType[] = [
 ];
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    const sos_gallery_slides: { name: string, position: Vector3, target: Vector3 }[] = [];
+    const sos_gallery_slides: {
+        name: string,
+        position: Vector3,
+        target: Vector3,
+        speed: number,
+        framesCount: number,
+        positionOnly: boolean,
+        autoNext: boolean,
+        isInitializer: boolean
+    }[] = [];
 
     const options = {
         name: "Slide_1",
+        speed: speed,
+        framesCount: framecount,
+        positionOnly: false,
+        autoNext: false,
+        isInitializer: true,
         add: function () {
             sos_gallery_slides.push({
                 name: options.name,
                 position: appConfig.appCamera!.position.clone(),
-                target: appConfig.appCamera!.target.clone()
+                target: appConfig.appCamera!.target.clone(),
+                speed: options.speed,
+                framesCount: options.framesCount,
+                positionOnly: options.positionOnly,
+                autoNext: options.autoNext,
+                isInitializer: options.isInitializer,
             });
+
             options.name = `Slides_${sos_gallery_slides.length + 1}`;
+            if (sos_gallery_slides.length >= 1) {
+                options.isInitializer = false;
+            }
         },
         copy: function () {
             const json = `
@@ -124,6 +147,11 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
                             name: "${slide.name}",
                             slideCameraPosition: ${`new Vector3(${slide.position.x}, ${slide.position.y}, ${slide.position.z})`},
                             slideCameraTarget: ${`new Vector3(${slide.target.x}, ${slide.target.y}, ${slide.target.z})`},
+                            animationSpeed: ${slide.speed},
+                            animationFrameCount: ${slide.framesCount},
+                            positionOnly: ${slide.positionOnly},
+                            autoNext: ${slide.autoNext},
+                            isInitializer: ${slide.isInitializer},
                         },
                     `).join("")}
                 ]
@@ -136,6 +164,11 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     gui.domElement.id = 'dat-gui';
     const slidesFolder = gui.addFolder("Slides");
     slidesFolder.add(options, 'name').name("Slide Name").listen();
+    slidesFolder.add(options, 'speed').name("Speed");
+    slidesFolder.add(options, 'framesCount').name("Frames Count");
+    slidesFolder.add(options, 'positionOnly').name("Position Only?");
+    slidesFolder.add(options, 'autoNext').name("Auto Next?");
+    slidesFolder.add(options, 'isInitializer').name("Initialier?").listen();
     slidesFolder.add(options, 'add').name("Add Slide");
     slidesFolder.add(options, 'copy').name("Copy to Clipboard");
     gui.close();
